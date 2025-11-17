@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Music</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1db954;
+            margin-bottom: 30px;
+        }
+
+        .song-container {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .song-title {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .song-artist {
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+
+        .download-btn {
+            background-color: 
+#C70039;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: #1db954;
+            text-decoration: none;
+            display: block;
+            margin-top: 30px;
+            font-size: 0px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Download file</h1>
+
+    <div class="song-container">
+       
+      </br>  </br></br> 
+
+        <button class="download-btn" id="download-btn">Download</button>
+        <a href="index.html" class="back-link">Back to Player</a>
+    </div>
+
+    <script>
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = 'xyz.mp3';
+            link.download = 'Track 1 - Artist 1.mp3';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
