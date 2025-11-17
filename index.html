@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Made in 🇮🇳</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #player-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        #song-info {
+            margin-bottom: 25px;
+        }
+
+        #song-title {
+            font-size: 1.6em;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        #artist {
+            font-size: 1em;
+            color: #b3b3b3;
+            font-style: italic;
+        }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #1db954;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            margin: 0 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #1ed760;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #444;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #seek-bar-container {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        #current-time,
+        #duration {
+            font-size: 0.8em;
+            color: #b3b3b3;
+            margin: 0 4px;
+            width: 35px;
+            text-align: center;
+        }
+
+        #seek-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #444;
+            border-radius: 5px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        #seek-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background-color: #1db954;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.2s ease;
+        }
+
+        #seek-bar::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background-color: #1db954;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            transform: translateY(-50%);
+            transition: transform 0.2s ease;
+        }
+
+        #seek-bar::-webkit-slider-thumb:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #seek-bar::-moz-range-thumb:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #seek-bar::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #444;
+            border-radius: 5px;
+        }
+
+        #seek-bar::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            background: #444;
+            border-radius: 5px;
+        }
+
+        #seek-bar:focus {
+            outline: none;
+        }
+
+        #volume-control {
+            display: flex;
+            align-items: center;
+        }
+
+        #volume-icon {
+            margin-right: 6px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #volume-slider {
+            width: 90px;
+            margin: 0 8px;
+        }
+
+        i {
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div id="player-container">
+        <div id="song-info">
+            <h2 id="song-title">Song Title</h2>
+            <p id="artist">Artist Name</p>
+        </div>
+
+        <audio id="audio-player" preload="metadata">
+            <source src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <div id="seek-bar-container">
+            <span id="current-time">0:00</span>
+            <input type="range" id="seek-bar" value="0" step="0.1" min="0" max="100">
+            <span id="duration">0:00</span>
+        </div>
+
+        <div id="controls">
+            <button id="prev-btn" disabled><i class="fas fa-backward"></i></button>
+            <button id="play-btn"><i class="fas fa-play"></i></button>
+            <button id="next-btn" disabled><i class="fas fa-forward"></i></button>
+
+            <div id="volume-control">
+                <i id="volume-icon" class="fas fa-volume-up"></i>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+            </div>
+        </div><a href="download.html" target="_blank">
+  <button id="download-btn">
+    <i class="fas fa-download"></i> Download
+  </button>
+</a>
+    </div>
+    
+    
+
+    <script>
+        const audioPlayer = document.getElementById('audio-player');
+        const songTitle = document.getElementById('song-title');
+        const artist = document.getElementById('artist');
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const seekBar = document.getElementById('seek-bar');
+        const volumeIcon = document.getElementById('volume-icon');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const durationDisplay = document.getElementById('duration');
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
+
+        const songs = [
+            {
+                title: "Ariyathe(F) - Mazhavillu",
+                artist:"Celin Jose",
+                source: "xyz.mp3", // Enter Song source here
+                duration: "03:56",
+            }
+        ];
+        
+        
+
+        function loadSong(songIndex) {
+            const song = songs[songIndex];
+            audioPlayer.src = song.source;
+            songTitle.textContent = song.title;
+            artist.textContent = song.artist;
+            
+            currentTimeDisplay.textContent = "0:00";
+            durationDisplay.textContent = "--:--";
+            
+            // Remove and add event listener to avoid duplicates
+            audioPlayer.removeEventListener('loadedmetadata', onMetadataLoaded);
+            audioPlayer.addEventListener('loadedmetadata', onMetadataLoaded);
+            
+            prevBtn.disabled = songIndex === 0;
+            nextBtn.disabled = songIndex === songs.length - 1;
+            
+            seekBar.value = 0;
+        }
+
+        function onMetadataLoaded() {
+            seekBar.max = audioPlayer.duration;
+            durationDisplay.textContent = formatTime(audioPlayer.duration);
+        }
+
+        function playSong() {
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    isPlaying = true;
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                })
+                .catch(error => {
+                    console.error("Playback failed:", error);
+                });
+            }
+        }
+
+        function pauseSong() {
+            audioPlayer.pause();
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        function nextSong() {
+            if (currentSongIndex < songs.length - 1) {
+                currentSongIndex++;
+                loadSong(currentSongIndex);
+                if (isPlaying) {
+                    playSong();
+                }
+            }
+        }
+
+        function prevSong() {
+            if (currentSongIndex > 0) {
+                currentSongIndex--;
+                loadSong(currentSongIndex);
+                if (isPlaying) {
+                    playSong();
+                }
+            }
+        }
+
+        function updateVolume() {
+            audioPlayer.volume = volumeSlider.value;
+
+            if (audioPlayer.volume === 0) {
+                volumeIcon.className = "fas fa-volume-mute";
+            } else if (audioPlayer.volume < 0.5) {
+                volumeIcon.className = "fas fa-volume-down";
+            } else {
+                volumeIcon.className = "fas fa-volume-up";
+            }
+        }
+
+        function updateSeekBar() {
+            if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
+                const currentTime = audioPlayer.currentTime;
+                
+                // Update the seek bar value without triggering the input event
+                seekBar.value = currentTime;
+                
+                currentTimeDisplay.textContent = formatTime(currentTime);
+            }
+        }
+
+        function seekTo() {
+            if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
+                audioPlayer.currentTime = parseFloat(seekBar.value);
+            }
+        }
+            
+        function formatTime(time) {
+            if (isNaN(time) || !isFinite(time)) return "0:00";
+            
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Toggle mute when clicking the volume icon
+        volumeIcon.addEventListener('click', () => {
+            if (audioPlayer.volume > 0) {
+                // Store current volume before muting
+                volumeIcon.dataset.previousVolume = volumeSlider.value;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+                volumeIcon.className = "fas fa-volume-mute";
+            } else {
+                // Restore previous volume
+                const previousVolume = volumeIcon.dataset.previousVolume || 1;
+                audioPlayer.volume = previousVolume;
+                volumeSlider.value = previousVolume;
+                updateVolume();
+            }
+        });
+
+        // Event Listeners
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseSong();
+            } else {
+                playSong();
+            }
+        });
+
+        nextBtn.addEventListener('click', nextSong);
+        prevBtn.addEventListener('click', prevSong);
+        volumeSlider.addEventListener('input', updateVolume);
+        audioPlayer.addEventListener('timeupdate', updateSeekBar);
+        seekBar.addEventListener('touchend', seekTo);  // Changed from 'change' to 'input' for real-time updates
+
+        // End of song event listener
+        audioPlayer.addEventListener('ended', () => {
+            if (currentSongIndex < songs.length - 1) {
+                nextSong();
+            } else {
+                pauseSong();
+                audioPlayer.currentTime = 0;
+                updateSeekBar();
+            }
+        });
+
+        // Load the first song
+        loadSong(currentSongIndex);
+    </script>
+</body>
+</html>
